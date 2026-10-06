@@ -1,3 +1,4 @@
+/* colors + box sizing */
 * {
   box-sizing: border-box;
 }
@@ -11,6 +12,8 @@
   --accent: #0f766e;
   --accent-hover: #0d9488;
   --done: #a8a29e;
+  --error: #b91c1c;
+  --error-bg: #fef2f2;
 }
 
 body {
@@ -39,6 +42,7 @@ h1 {
   line-height: 1.1;
 }
 
+/* input + add button */
 .add-task {
   display: flex;
   gap: 10px;
@@ -86,6 +90,23 @@ h1 {
   background-color: var(--accent-hover);
 }
 
+/* error message – hidden until .visible is added */
+.message {
+  display: none;
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--error);
+  background-color: var(--error-bg);
+  border-left: 3px solid var(--error);
+}
+
+.message.visible {
+  display: block;
+}
+
+/* task list */
 #taskList {
   margin: 8px 0 28px;
   padding: 0;
@@ -107,6 +128,7 @@ h1 {
   opacity: 0.85;
 }
 
+/* done tasks look faded + crossed out */
 #taskList li.completed {
   color: var(--done);
   text-decoration: line-through;

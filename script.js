@@ -2,16 +2,32 @@ const input = document.querySelector("#taskInput");
 const addButton = document.querySelector("#addButton");
 const taskList = document.querySelector("#taskList");
 const completedCount = document.querySelector("#completedCount");
+const message = document.querySelector("#message");
 
+// all tasks live here
 const tasks = [];
 
+// show or hide the message on the page
+function showMessage(text) {
+  message.textContent = text;
+
+  if (text === "") {
+    message.classList.remove("visible");
+  } else {
+    message.classList.add("visible");
+  }
+}
+
+// add a task if the input isn't empty
 function addTask() {
   const text = input.value.trim();
 
   if (text === "") {
-    alert("Du måste skriva något!");
+    showMessage("Du måste skriva något!");
     return;
   }
+
+  showMessage("");
 
   tasks.push({
     text: text,
@@ -22,6 +38,7 @@ function addTask() {
   renderTasks();
 }
 
+// rebuild the list from the tasks array
 function renderTasks() {
   taskList.innerHTML = "";
 
@@ -40,10 +57,12 @@ function renderTasks() {
       li.classList.add("completed");
     }
 
+    // click the task to mark it done / not done
     li.addEventListener("click", function () {
       toggleTask(i);
     });
 
+    // stop click from also toggling completed
     deleteButton.addEventListener("click", function (event) {
       event.stopPropagation();
       deleteTask(i);
@@ -57,7 +76,10 @@ function renderTasks() {
   updateCompletedCount();
 }
 
+// toggle completed on/off
 function toggleTask(index) {
+  showMessage("");
+
   if (tasks[index].completed === false) {
     tasks[index].completed = true;
   } else {
@@ -67,11 +89,14 @@ function toggleTask(index) {
   renderTasks();
 }
 
+// remove a task
 function deleteTask(index) {
+  showMessage("");
   tasks.splice(index, 1);
   renderTasks();
 }
 
+// how many tasks are done
 function updateCompletedCount() {
   let count = 0;
 
@@ -85,4 +110,10 @@ function updateCompletedCount() {
 }
 
 addButton.addEventListener("click", addTask);
+
+// clear message when user types again
+input.addEventListener("input", function () {
+  showMessage("");
+});
+
 renderTasks();
