@@ -90,20 +90,20 @@ h1 {
   background-color: var(--accent-hover);
 }
 
-/* error message – hidden until .visible is added */
-.message {
-  display: none;
+/* error text under the input – only takes space when it has text */
+#message {
+  min-height: 0;
   margin: 12px 0 0;
-  padding: 10px 12px;
+  padding: 0;
   font-size: 0.95rem;
   font-weight: 500;
   color: var(--error);
-  background-color: var(--error-bg);
-  border-left: 3px solid var(--error);
 }
 
-.message.visible {
-  display: block;
+#message:not(:empty) {
+  padding: 10px 12px;
+  background-color: var(--error-bg);
+  border-left: 3px solid var(--error);
 }
 
 /* task list */

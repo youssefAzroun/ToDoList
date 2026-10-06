@@ -2,20 +2,14 @@ const input = document.querySelector("#taskInput");
 const addButton = document.querySelector("#addButton");
 const taskList = document.querySelector("#taskList");
 const completedCount = document.querySelector("#completedCount");
-const message = document.querySelector("#message");
+const messageEl = document.querySelector("#message");
 
 // all tasks live here
 const tasks = [];
 
-// show or hide the message on the page
+// put the message in the page (no alert)
 function showMessage(text) {
-  message.textContent = text;
-
-  if (text === "") {
-    message.classList.remove("visible");
-  } else {
-    message.classList.add("visible");
-  }
+  messageEl.textContent = text;
 }
 
 // add a task if the input isn't empty
@@ -62,7 +56,7 @@ function renderTasks() {
       toggleTask(i);
     });
 
-    // stop click from also toggling completed
+    // stop delete from also toggling completed
     deleteButton.addEventListener("click", function (event) {
       event.stopPropagation();
       deleteTask(i);
