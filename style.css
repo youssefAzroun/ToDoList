@@ -1,67 +1,85 @@
-/* colors + box sizing */
+/* reset + base */
 * {
   box-sizing: border-box;
 }
 
 :root {
-  --ink: #1c1917;
-  --muted: #78716c;
-  --line: #d6d3d1;
-  --paper: #f0ebe3;
-  --paper-deep: #e4ddd2;
-  --accent: #0f766e;
-  --accent-hover: #0d9488;
-  --done: #a8a29e;
-  --error: #b91c1c;
-  --error-bg: #fef2f2;
+  --ink: #333333;
+  --muted: #888888;
+  --line: #e8e8e8;
+  --card: #ffffff;
+  --accent: #e91e8c;
+  --accent-hover: #c41874;
+  --done: #aaaaaa;
+  --error: #e53935;
+  --pink-start: #ff9a9e;
+  --pink-end: #fad0c4;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  padding: 64px 24px 48px;
+  padding: 40px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: "Source Sans 3", "Segoe UI", sans-serif;
   color: var(--ink);
-  background:
-    radial-gradient(ellipse 80% 50% at 10% -10%, #dce8e4 0%, transparent 55%),
-    radial-gradient(ellipse 60% 40% at 100% 0%, #ebe4d8 0%, transparent 50%),
-    linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+  /* pink gradient background */
+  background: linear-gradient(160deg, var(--pink-start) 0%, #fbc2eb 45%, var(--pink-end) 100%);
 }
 
+/* centered white container – flies down on page load */
 main {
-  max-width: 420px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 380px;
+  padding: 36px 32px 28px;
+  background-color: var(--card);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(180, 60, 100, 0.25);
+  animation: page-enter 0.7s ease-out;
+}
+
+/* A. page entrance: fly down + fade in */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 h1 {
-  margin: 0 0 8px;
-  font-family: "Source Serif 4", Georgia, serif;
-  font-size: clamp(2.4rem, 8vw, 3rem);
+  margin: 0 0 24px;
+  font-size: 1.75rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: var(--ink);
 }
 
-/* input + add button */
+/* input + OK button */
 .add-task {
   display: flex;
-  gap: 10px;
-  margin-top: 28px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--line);
+  gap: 8px;
+  align-items: stretch;
 }
 
 #taskInput {
   flex: 1;
-  padding: 10px 0;
+  min-width: 0;
+  padding: 10px 12px;
   font-family: inherit;
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--ink);
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid var(--line);
+  background: #fafafa;
+  border: 1px solid var(--line);
+  border-radius: 6px;
   outline: none;
-  transition: border-color 0.15s ease;
+  transition: border-color 0.2s ease;
 }
 
 #taskInput::placeholder {
@@ -69,19 +87,20 @@ h1 {
 }
 
 #taskInput:focus {
-  border-bottom-color: var(--accent);
+  border-color: var(--accent);
+  background: #fff;
 }
 
 #addButton {
   flex-shrink: 0;
-  padding: 10px 14px;
+  padding: 10px 18px;
   font-family: inherit;
   font-size: 0.95rem;
   font-weight: 600;
   color: #fff;
   background-color: var(--accent);
   border: none;
-  border-radius: 2px;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.15s ease;
 }
@@ -90,25 +109,37 @@ h1 {
   background-color: var(--accent-hover);
 }
 
-/* error text under the input – only takes space when it has text */
+/* error message under the input */
 #message {
-  min-height: 0;
-  margin: 12px 0 0;
+  min-height: 1.25em;
+  margin: 10px 0 0;
   padding: 0;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: var(--error);
+  text-align: center;
 }
 
-#message:not(:empty) {
-  padding: 10px 12px;
-  background-color: var(--error-bg);
-  border-left: 3px solid var(--error);
+/* D. empty-input error: blink red */
+#message.blink {
+  animation: error-blink 0.35s ease-in-out 3;
+}
+
+@keyframes error-blink {
+  0%,
+  100% {
+    color: var(--error);
+    opacity: 1;
+  }
+  50% {
+    color: #ff1744;
+    opacity: 0.15;
+  }
 }
 
 /* task list */
 #taskList {
-  margin: 8px 0 28px;
+  margin: 16px 0 20px;
   padding: 0;
   list-style: none;
 }
@@ -118,24 +149,44 @@ h1 {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 14px 2px;
+  padding: 12px 4px;
   border-bottom: 1px solid var(--line);
   cursor: pointer;
-  transition: color 0.15s ease, opacity 0.15s ease;
+  /* C. completed tasks: smooth fade to gray */
+  transition: color 0.45s ease, opacity 0.45s ease;
+}
+
+#taskList li span {
+  flex: 1;
+  word-break: break-word;
+  transition: color 0.45s ease, text-decoration-color 0.45s ease;
 }
 
 #taskList li:hover {
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
-/* done tasks look faded + crossed out */
-#taskList li.completed {
+/* done tasks look gray + crossed out */
+#taskList li.completed,
+#taskList li.completed span {
   color: var(--done);
   text-decoration: line-through;
 }
 
-#taskList li.completed span {
-  text-decoration: line-through;
+/* B. new tasks: fade in + slide up */
+#taskList li.task-enter {
+  animation: task-enter 0.45s ease-out;
+}
+
+@keyframes task-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .delete-button {
@@ -144,7 +195,7 @@ h1 {
   height: 28px;
   padding: 0;
   font-family: inherit;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   line-height: 1;
   color: var(--muted);
   background: none;
@@ -159,9 +210,31 @@ h1 {
 
 #completedCount {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  text-align: center;
   color: var(--muted);
+}
+
+/* mobile spacing */
+@media (max-width: 480px) {
+  body {
+    padding: 24px 12px;
+    align-items: flex-start;
+    padding-top: 32px;
+  }
+
+  main {
+    padding: 28px 20px 24px;
+    border-radius: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+  #addButton {
+    padding: 10px 14px;
+  }
 }
