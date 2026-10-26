@@ -25,7 +25,7 @@ function addTask() {
   const text = input.value.trim();
 
   if (text === "") {
-    showMessage("Du måste skriva något!");
+    showMessage("Input must not be empty");
     blinkError();
     return;
   }
@@ -136,7 +136,7 @@ function updateCompletedCount() {
     }
   }
 
-  completedCount.textContent = "Klart: " + count;
+  completedCount.textContent = count + " completed";
 }
 
 addButton.addEventListener("click", addTask);

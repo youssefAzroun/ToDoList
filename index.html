@@ -1,32 +1,23 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ToDo</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>My ToDo</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- white card: pink page behind it -->
   <main>
-    <h1>ToDo</h1>
+    <h1>My ToDo</h1>
+    <p id="completedCount">0 completed</p>
 
-    <!-- add new task -->
     <div class="add-task">
-      <input type="text" id="taskInput" placeholder="Skriv en uppgift">
+      <input type="text" id="taskInput">
       <button type="button" id="addButton">OK</button>
     </div>
 
-    <!-- shown when the input is empty -->
     <p id="message"></p>
-
-    <!-- tasks get added here -->
     <ul id="taskList"></ul>
-
-    <p id="completedCount">Klart: 0</p>
   </main>
 
   <script src="script.js"></script>
