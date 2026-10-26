@@ -4,23 +4,21 @@ const taskList = document.querySelector("#taskList");
 const completedCount = document.querySelector("#completedCount");
 const messageEl = document.querySelector("#message");
 
-// all tasks live here
+// stores all tasks
 const tasks = [];
 
-// put the message in the page (no alert)
 function showMessage(text) {
   messageEl.textContent = text;
 }
 
-// restart the red blink on the error message
+// makes the error text blink
 function blinkError() {
   messageEl.classList.remove("blink");
-  // force reflow so the animation can play again
-  void messageEl.offsetWidth;
+  void messageEl.offsetWidth; // needed so the blink can restart
   messageEl.classList.add("blink");
 }
 
-// add a task if the input isn't empty
+// adds a new task from the input
 function addTask() {
   const text = input.value.trim();
 
@@ -39,11 +37,10 @@ function addTask() {
   });
 
   input.value = "";
-  // only animate the new task (last index)
-  renderTasks(tasks.length - 1);
+  renderTasks(tasks.length - 1); // animate only the new one
 }
 
-// build one list item for a task
+// creates one <li> for a task
 function createTaskItem(task, index, animate) {
   const li = document.createElement("li");
   const textSpan = document.createElement("span");
@@ -58,17 +55,16 @@ function createTaskItem(task, index, animate) {
     li.classList.add("completed");
   }
 
-  // new task slides up + fades in
   if (animate === true) {
     li.classList.add("task-enter");
   }
 
-  // click the task to mark it done / not done
+  // click text to mark done / not done
   li.addEventListener("click", function () {
     toggleTask(index);
   });
 
-  // stop delete from also toggling completed
+  // delete without toggling completed
   deleteButton.addEventListener("click", function (event) {
     event.stopPropagation();
     deleteTask(index);
@@ -79,8 +75,7 @@ function createTaskItem(task, index, animate) {
   return li;
 }
 
-// rebuild the list from the tasks array
-// animateIndex = which task should play the enter animation (or -1 for none)
+// redraws the whole list
 function renderTasks(animateIndex) {
   taskList.innerHTML = "";
 
@@ -96,7 +91,7 @@ function renderTasks(animateIndex) {
   updateCompletedCount();
 }
 
-// toggle completed on/off – class change lets CSS fade to gray
+// mark a task as completed or not
 function toggleTask(index) {
   showMessage("");
   messageEl.classList.remove("blink");
@@ -107,7 +102,6 @@ function toggleTask(index) {
     tasks[index].completed = false;
   }
 
-  // update the existing li so the gray fade can run
   const li = taskList.children[index];
   if (tasks[index].completed === true) {
     li.classList.add("completed");
@@ -118,7 +112,6 @@ function toggleTask(index) {
   updateCompletedCount();
 }
 
-// remove a task
 function deleteTask(index) {
   showMessage("");
   messageEl.classList.remove("blink");
@@ -126,7 +119,7 @@ function deleteTask(index) {
   renderTasks(-1);
 }
 
-// how many tasks are done
+// updates the "X completed" text
 function updateCompletedCount() {
   let count = 0;
 
@@ -141,7 +134,7 @@ function updateCompletedCount() {
 
 addButton.addEventListener("click", addTask);
 
-// clear message when user types again
+// hide error when user starts typing
 input.addEventListener("input", function () {
   showMessage("");
   messageEl.classList.remove("blink");

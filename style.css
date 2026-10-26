@@ -2,19 +2,20 @@
   box-sizing: border-box;
 }
 
+/* page layout + pink background */
 body {
   margin: 0;
   min-height: 100vh;
-  padding: 48px 16px 40px;
+  padding: 24px 16px 40px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   font-family: Arial, Helvetica, sans-serif;
   color: #000;
-  /* exact colors sampled from reference image */
   background: linear-gradient(to bottom, #fec6c5 0%, #fd7d7c 100%);
 }
 
+/* white card in the middle */
 main {
   width: 100%;
   max-width: 340px;
@@ -22,6 +23,26 @@ main {
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  animation: page-enter 0.9s ease-out;
+}
+
+/* flies down + small bounce on load */
+@keyframes page-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(-60px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(8px);
+  }
+  80% {
+    transform: translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 h1 {
@@ -43,6 +64,7 @@ h1 {
   color: #000;
 }
 
+/* input + OK button side by side */
 .add-task {
   display: flex;
   gap: 6px;
@@ -63,12 +85,14 @@ h1 {
   transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
 }
 
+/* light hover on the input */
 #taskInput:hover:not(:focus) {
   border-color: #888;
   background-color: #fafafa;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.04);
 }
 
+/* blue border when focused */
 #taskInput:focus {
   border: 2px solid #5d9ff5;
   padding: 3px 5px;
@@ -90,6 +114,7 @@ h1 {
   background-color: #dcdcdc;
 }
 
+/* error message under the input */
 #message {
   min-height: 0;
   margin: 0;
@@ -122,6 +147,7 @@ h1 {
   }
 }
 
+/* task list */
 #taskList {
   margin: 8px 0 0;
   padding: 0;
@@ -148,6 +174,7 @@ h1 {
   transition: color 1.2s ease, text-decoration-color 1.2s ease;
 }
 
+/* completed tasks fade to gray */
 #taskList li.completed,
 #taskList li.completed span {
   color: #aaaaaa;
@@ -158,6 +185,7 @@ h1 {
   animation: task-enter 0.45s ease-out;
 }
 
+/* new task fades in */
 @keyframes task-enter {
   from {
     opacity: 0;
